@@ -66,7 +66,7 @@ app.post('/users', function(req, res) {
       return;
     }
     else {
-      console.log("Tshirt created");
+      console.log("user created");
       return res.send({status: 'OK', user: newUser});
     }
   });
