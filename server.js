@@ -7,6 +7,7 @@ var mongoose = require('mongoose'); // mongoose for mongodb
 var morgan = require('morgan'); // log requests to the console (express4)
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+var fs = require('fs');
 
 // configuration =================
 
@@ -27,36 +28,54 @@ app.use(methodOverride());
 app.listen(80);
 console.log("App listening on port 80!");
 
-mongoose.model('users', {
-  name: String,
-  intra: String,
-  mail: String
+fs.readdirSync(__dirname + '/models').forEach(function(fileName){
+  console.log("loading model " + fileName);
+  if(~fileName.indexOf('.js')) require(__dirname+'/models/'+fileName);
 });
 
-mongoose.model('teams', {
-  teamName: String,
-  members: [String]
-});
+// mongoose.model('news', {
+//   author: String,
+//   content: String,
+//   date: Date
+// });
 
-mongoose.model('news', {
-  author: String,
-  content: String,
-  date: Date
-});
-
-mongoose.model('freeplayers', {
-  name: String,
-  joiningDate: Date,
-  acceppted: Boolean
-});
+// mongoose.model('freeplayers', {
+//   name: String,
+//   joiningDate: Date,
+//   acceppted: Boolean
+// });
 
 
 app.get('/users', function(req, res) {
   mongoose.model('users').find(
     function(err, users) {
       res.send(users);
+    });
+});
+
+app.post('/users', function(req, res) {
+  var newUser = mongoose.model('users')({
+      name : req.body.name,
+      intra: req.body.intra,
+      mail: req.body.mail
+    });
+  newUser.save(function(err){
+    if(err) {
+      console.log("Cannot save user"+err);
+      res.send({error:err});
+      return;
     }
-  );
+    else {
+      console.log("Tshirt created");
+      return res.send({status: 'OK', user: newUser});
+    }
+  });
+});
+
+app.get('/users/:userId', function(req, res) {
+  mongoose.model('users').find({_id: req.params.userId}, function(err, users) {
+      res.send(users);
+    });
 });
 
 app.get('/teams', function(req, res) {
