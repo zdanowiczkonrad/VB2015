@@ -33,19 +33,6 @@ fs.readdirSync(__dirname + '/models').forEach(function(fileName){
   if(~fileName.indexOf('.js')) require(__dirname+'/models/'+fileName);
 });
 
-// mongoose.model('news', {
-//   author: String,
-//   content: String,
-//   date: Date
-// });
-
-// mongoose.model('freeplayers', {
-//   name: String,
-//   joiningDate: Date,
-//   acceppted: Boolean
-// });
-
-
 app.get('/users', function(req, res) {
   mongoose.model('users').find(
     function(err, users) {
