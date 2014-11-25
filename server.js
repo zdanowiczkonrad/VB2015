@@ -26,7 +26,7 @@ app.use(methodOverride());
 
 // listen (start app with node server.js) ======================================
 app.listen(80);
-console.log("App listening on port 80!");
+console.log("App started on port 80!");
 
 fs.readdirSync(__dirname + '/models').forEach(function(fileName){
   console.log("loading model " + fileName);
