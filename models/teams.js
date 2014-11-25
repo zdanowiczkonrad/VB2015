@@ -6,4 +6,6 @@ var teamsSchema = new Schema({
   members: [String]
 });
 
+console.log("commit test");
+
 mongoose.model('teams', teamsSchema);
