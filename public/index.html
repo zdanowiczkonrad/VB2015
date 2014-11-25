@@ -54,9 +54,9 @@
                         </li>
                         <li><a href="#">News</a>
                         </li>
-                        <li><a href="#"><strong>Sign up</strong></a>
-                        </li>
                         <li><a href="#">Rules</a>
+                        </li>
+                        <li><a href="#"><strong>Sign up</strong></a>
                         </li>
                         <li><a href="#">Teams</a>
                         </li>
@@ -68,7 +68,6 @@
                         </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
 
@@ -185,6 +184,7 @@
 
 
         <h1 class="page-header">Teams</h1>
+
         <p class="lead">Here you may find teams, that have already declared they will to participate in the
             <abbr>NVC2k15</abbr> <em>(Nokia Volleyball Cup 2015)</em>.</p>
         <table class="table table-responsive">
@@ -193,18 +193,42 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Join date</th>
-                    <th>Apprvd</th>
+                    <th>Approved?</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="team in data.teams" ng-class="utils.getTeamStatusClass(team)">
+                <td>{{team.number}}</td>
+                <td>{{team.name}}</td>
+                <td>{{team.date}}</td>
+                <td><span ng-show="team.approved" class="glyphicon glyphicon-ok"/>
+            </tr>
+        </table>
+
+
+        <h1 class="page-header">Free players</h1>
+        <p class="lead">Here you may find players, that will to play in the Volleyball Cup and are looking for the squad. Feel free to contact them if you wish to join them in the game!</p>
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Join date</th>
+                    <th>Free</th>
                 </tr>
             </thead>
             <tr>
                 <td>1</td>
-                <td>Fallen angels</td>
+                <td>John Doe</td>
                 <td>
                     2015-01-02
                 </td>
-                <td><span class="glyphicon glyphicon-ok"></span>
+                <td><span class="glyphicon glyphicon-stop"></span>
             </tr>
         </table>
+
+        <h1>FAQ</h1>
+
+        <p>Everything is clear and has been said. :)</p>
     </div>
 
 </body>

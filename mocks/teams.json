@@ -1,5 +1,19 @@
+[{
+	"number":"1",
+    "name": "Fallen angels",
+    "date": "2015-01-01",
+    "approved": true,
+    "captain": "Mariusz Wlazły",
+    "description" : "We're a really cool team.",
+    "reserve": false
+},
 {
-    "name": "Mr Mock",
-    "mail": "Mail@Mock",
-    "intra": "Mockintra"
+	"number":"2",
+    "name": "SON Managers",
+    "date": "2015-01-02",
+    "approved": false,
+    "captain": "Mike",
+    "description" : "Sponsored by Vaadin",
+    "reserve": true
 }
+]

@@ -1,13 +1,25 @@
 var vbFrontend = angular.module('vbFrontend', [])
 
 function mainController($scope, $http) {
-    $scope.staticTexts = {
-        "example": "this works"
-    }
 
-    console.log("siema siema");
+    $scope.data = {}
+
+    /**
+     * Constructor
+     */
+    // load team data
     $http.get('/teams').success(function(data) {
-        console.log(data);
+        $scope.data.teams = data;
+        console.log("Loading teams succeeded", data);
     });
+
+
+    $scope.utils = {};
+
+    $scope.utils.getTeamStatusClass = function(team) {
+        return {
+            "warning": team.reserve
+        };
+    }
 
 }
