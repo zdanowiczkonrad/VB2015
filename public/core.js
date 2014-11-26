@@ -29,4 +29,12 @@ function mainController($scope, $http) {
         };  
     }
 
+    $scope.signups = {}
+    $scope.signups.team = {}
+
+    $scope.signups.signupTeam = function() {
+        console.log($scope.signups.team);
+        // business logic -> POST on teams endpoint
+    }
+
 }
