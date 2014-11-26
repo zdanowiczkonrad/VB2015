@@ -7,7 +7,7 @@ var morgan = require('morgan'); // log requests to the console (express4)
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var fs = require('fs');
-var mongoose = require(process.env.ENV == "dev" || true ? (process.cwd() + '/mocks/mongoose.js') : 'mongoose');
+var mongoose = require(process.env.ENV == "dev" ? (process.cwd() + '/mocks/mongoose.js') : 'mongoose');
 
 mongoose.connect('mongodb://localhost:27017/vb');
 

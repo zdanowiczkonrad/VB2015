@@ -1,0 +1,35 @@
+   .jumbotron {
+        margin-top: 100px;
+        text-align: center;
+    }
+
+	.navbar-brand {
+		padding: 0px 10px;
+	}
+    .navbar-brand img {
+		max-height: 50px;
+		display: block;
+    }
+
+    .navbar-ocean {
+    	background-color:#004C9A;
+    }
+
+    .navbar-ocean .navbar-nav>li>a {
+    	color: white;
+    	background-color:#004C9A;
+    	transition: background-color 0.2s;
+    }
+
+     .navbar-ocean .navbar-nav>li>a:hover {
+    	background-color: white;
+    	color: black;
+    }
+
+    .btn-primary {
+    	background-color:#004C9A;
+    	font-weight: 200;
+    }
+    .btn-default {
+    	background-color:rgba(255,255,255,0.2);
+    }
