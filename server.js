@@ -71,3 +71,28 @@ app.get('/teams', function(req, res) {
         res.send(teams);
     });
 });
+
+app.post('/teams', function(req,res) {
+     var newTeam = mongoose.model('teams')({
+        name: req.body.name,
+        captain: req.body.captain,
+        description: req.body.description
+    });
+
+       newTeam.save(function(err) {
+        if (err) {
+            console.log('Cannot save team' + err);
+            res.send({
+                status: 'ERR',
+                error: err
+            });
+            return;
+        } else {
+            console.log('team created');
+            return res.send({
+                status: 'OK',
+                team: newTeam
+            });
+        }
+    });
+});
