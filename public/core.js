@@ -22,4 +22,11 @@ function mainController($scope, $http) {
         };
     }
 
+    $scope.utils.isPrimary = function(tabName,currentlyVisible) {
+        console.log(tabName,currentlyVisible);
+        return {
+            "btn-primary": tabName==currentlyVisible
+        };  
+    }
+
 }
