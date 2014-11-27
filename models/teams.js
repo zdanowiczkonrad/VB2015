@@ -7,8 +7,10 @@ var teamsSchema = new Schema({
   date: {type: Date, default: Date.now },
   approved: {type: Boolean, default: false},
   captain: String,
+  mail: String,
   description: String,
-  reserve: {type: Boolean, default: true}
+  reserve: {type: Boolean, default: true},
+  members: String
 });
 
 mongoose.model('teams', teamsSchema);

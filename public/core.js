@@ -1,6 +1,7 @@
+
 var vbFrontend = angular.module('vbFrontend', [])
 
-function mainController($scope, $http) {
+vbFrontend.controller('mainController', function($scope, $http) {
 
     $scope.data = {}
 
@@ -10,7 +11,7 @@ function mainController($scope, $http) {
     // load team data
     $http.get('/teams').success(function(data) {
         $scope.data.teams = data;
-        console.log("Loading teams succeeded", data);
+        console.log('Loading teams succeeded', data);
     });
 
 
@@ -18,14 +19,14 @@ function mainController($scope, $http) {
 
     $scope.utils.getTeamStatusClass = function(team) {
         return {
-            "warning": team.reserve
+            'warning': team.reserve
         };
     }
 
     $scope.utils.isPrimary = function(tabName,currentlyVisible) {
         console.log(tabName,currentlyVisible);
         return {
-            "btn-primary": tabName==currentlyVisible
+            'btn-primary': tabName==currentlyVisible
         };  
     }
 
@@ -34,7 +35,7 @@ function mainController($scope, $http) {
 
     $scope.signups.signupTeam = function() {
         console.log($scope.signups.team);
-        // business logic -> POST on teams endpoint
+        $http.post('/teams',$scope.signups.team).success(function(data){console.log('team added.',data)});
     }
 
-}
+});

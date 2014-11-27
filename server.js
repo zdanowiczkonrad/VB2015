@@ -23,7 +23,7 @@ app.use(bodyParser.json({
 app.use(methodOverride());
 
 app.listen(8000);
-
+console.log("app up.");
 fs.readdirSync(__dirname + '/models').forEach(function(fileName) {
     if (~fileName.indexOf('.js')) require(__dirname + '/models/' + fileName);
 });
@@ -43,13 +43,13 @@ app.post('/users', function(req, res) {
     });
     newUser.save(function(err) {
         if (err) {
-            console.log("Cannot save user" + err);
+            console.log('Cannot save user' + err);
             res.send({
                 error: err
             });
             return;
         } else {
-            console.log("user created");
+            console.log('user created');
             return res.send({
                 status: 'OK',
                 user: newUser
@@ -76,7 +76,9 @@ app.post('/teams', function(req,res) {
      var newTeam = mongoose.model('teams')({
         name: req.body.name,
         captain: req.body.captain,
-        description: req.body.description
+        description: req.body.description,
+        mail: req.body.mail,
+        members: req.body.members
     });
 
        newTeam.save(function(err) {

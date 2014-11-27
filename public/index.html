@@ -20,7 +20,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <!-- load jquery -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
     <!-- load angular -->
     <script src="core.js"></script>
 
@@ -79,7 +79,7 @@
         <p class="lead">We are pleased to invite you to the first edition of Nokia Volleyball Cup!</p>
         <ul class="list-group">
             <li class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><strong> Date</strong> → 10 January 2015</li>
-            <li class="list-group-item"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> <strong>Place →</strong> ul. Chełmońskiego 43, Wroclaw</li>
+            <li class="list-group-item"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <strong>Place →</strong> ul. Chełmońskiego 43, Wroclaw</li>
             <li class="list-group-item"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <strong>Start time</strong> → 9:00 AM</li>
         </ul>
         <p class="well">Sign up your team and have fun during the tournament :) The only requirement is that you are Nokia employee, but feel free to take your friends and family to support you in the stands!</p>
@@ -106,12 +106,12 @@
 
         <h1 class="page-header">Sign up</h1>
         <p class="lead">Fill in this form if you are willing to participate, either with your team or as a <em>free player</em>.</p>
-      <div class="btn-group">
-            
-                <button ng-class="{'btn-primary': 'team'==visibleSignupTab}" class="btn btn-lg btn-default" ng-click="visibleSignupTab='team'" ng-init="visibleSignupTab='team'">Join as a team</button>
-          
-                <button  ng-class="{'btn-primary': 'freeplayer'==visibleSignupTab}" class="btn btn-lg btn-default" ng-click="visibleSignupTab='freeplayer'">Join as a free player</button>
-    </div>
+        <div class="btn-group">
+
+            <button ng-class="{'btn-primary': 'team'==visibleSignupTab}" class="btn btn-lg btn-default" ng-click="visibleSignupTab='team'" ng-init="visibleSignupTab='team'">Join as a team</button>
+
+            <button ng-class="{'btn-primary': 'freeplayer'==visibleSignupTab}" class="btn btn-lg btn-default" ng-click="visibleSignupTab='freeplayer'">Join as a free player</button>
+        </div>
         </ul>
 
         <div ng-show="visibleSignupTab=='team'">
@@ -127,19 +127,19 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Team captain</label>
                     <div class="col-sm-5">
-                        <input class="form-control" placeholder="Team captain's name">
+                        <input ng-model="signups.team.captain" class="form-control" placeholder="Team captain's name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Team captain's mail</label>
                     <div class="col-sm-5">
-                        <input class="form-control" placeholder="Team captain's mail @ nsn.com">
+                        <input ng-model="signups.team.mail" class="form-control" placeholder="Team captain's mail @ nsn.com">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Team description</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea ng-model="signups.team.description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -151,7 +151,7 @@
 
                     </label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" rows="8"></textarea>
+                        <textarea ng-model="signups.team.members" class="form-control" rows="8"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -209,7 +209,8 @@
 
         <h1 class="page-header">Teams</h1>
 
-        <p class="lead">Here you can find teams that have already aggred to participate in the <abbr>NVC2k15</abbr> <em>(Nokia Volleyball Cup 2015)</em>.</p>
+        <p class="lead">Here you can find teams that have already aggred to participate in the
+            <abbr>NVC2k15</abbr> <em>(Nokia Volleyball Cup 2015)</em>.</p>
         <table class="table table-responsive">
             <thead>
                 <tr>
@@ -219,17 +220,39 @@
                     <th>Approved?</th>
                 </tr>
             </thead>
-            <tr ng-repeat="team in data.teams" ng-class="utils.getTeamStatusClass(team)">
-                <td>{{team.number}}</td>
-                <td>{{team.name}}</td>
+            <tr ng-repeat-start="team in data.teams" ng-class="utils.getTeamStatusClass(team)">
+                <td><span class="glyphicon glyphicon-link" title="{{team._id}}"></span>
+                </td>
+                <td>
+                    <button class="btn-success btn-xs btn" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]">{{team.name}} <span class="glyphicon glyphicon-plus" />
+                    </button>
+                </td>
                 <td>{{team.date}}</td>
                 <td><span ng-show="team.approved" class="glyphicon glyphicon-ok" />
+
+            </tr>
+            <tr ng-show="showDetailsOf[team._id]" ng-repeat-end ng-class="utils.getTeamStatusClass(team)">
+                <td colspan="4" style="border-top: 0">
+
+                    <dl class="dl-horizontal">
+                        <dt>Captain</dt>
+                        <dd>{{team.captain}}</dd>
+
+                        <dt>Description</dt>
+                        <dd>{{team.description}}</dd>
+                        <dt>Players</dt>
+                        <dd>{{team.members}}</dd>
+                    </dl>
+
+
+
+                </td>
             </tr>
         </table>
 
 
         <h1 class="page-header">Free players</h1>
-        <p class="lead">Here you can find players that have already aggred to participate in the NVC2k15 (Nokia Volleyball Cup 2015) and are looking for the squad.  Feel free to contact and invite them  to your team.</p>
+        <p class="lead">Here you can find players that have already aggred to participate in the NVC2k15 (Nokia Volleyball Cup 2015) and are looking for the squad. Feel free to contact and invite them to your team.</p>
         <table class="table table-responsive">
             <thead>
                 <tr>
