@@ -72,8 +72,8 @@ app.get('/teams', function(req, res) {
     });
 });
 
-app.post('/teams', function(req,res) {
-     var newTeam = mongoose.model('teams')({
+app.post('/teams', function(req, res) {
+    var newTeam = mongoose.model('teams')({
         name: req.body.name,
         captain: req.body.captain,
         description: req.body.description,
@@ -81,7 +81,7 @@ app.post('/teams', function(req,res) {
         members: req.body.members
     });
 
-       newTeam.save(function(err) {
+    newTeam.save(function(err) {
         if (err) {
             console.log('Cannot save team' + err);
             res.send({
@@ -96,5 +96,50 @@ app.post('/teams', function(req,res) {
                 team: newTeam
             });
         }
+    });
+});
+
+app.get('/news', function(req, res) {
+    mongoose.model('news').find(
+        function(err, news) {
+            res.send(news);
+        });
+});
+
+app.post('/news', function(req, res) {
+    var newNews = mongoose.model('news')({
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.author
+    });
+
+    newNews.save(function(err) {
+        if (err) {
+            console.log('Cannot save news' + err);
+            res.send({
+                error: err
+            });
+            return;
+        } else {
+            console.log('news created');
+            return res.send({
+                status: 'OK',
+                news: newNews
+            });
+        }
+    });
+});
+
+var authorized = false;
+
+app.post('/admin', function(req, res) {
+    console.log(req.body);
+    if (req.body.login == "admin" && req.body.password == "admin")
+        authorized = true;
+
+    res.send(authorized ? {
+        message: "OK"
+    } : {
+        message: "denied"
     });
 });

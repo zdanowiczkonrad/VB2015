@@ -2,10 +2,12 @@ var vbFrontend = angular.module('vbFrontend', [])
 
 vbFrontend.controller('mainController', function($scope, $http) {
 
+    $scope.signups = {}
+    $scope.signups.team = {}
+    $scope.signups.player = {}
+
     $scope.data = {}
-    $('a').click(function() {
-        console.log('test')
-    });
+    $scope.utils = {}
     /**
      * Constructor
      */
@@ -20,7 +22,11 @@ vbFrontend.controller('mainController', function($scope, $http) {
         console.log('Loading players succeeded', data);
     });
 
-    $scope.utils = {};
+ $http.get('/news').success(function(data) {
+        $scope.data.news = data;
+        console.log('Loading news succeeded', data);
+    });
+
 
     $scope.utils.getTeamStatusClass = function(team) {
         return {
@@ -35,9 +41,19 @@ vbFrontend.controller('mainController', function($scope, $http) {
         };
     }
 
-    $scope.signups = {}
-    $scope.signups.team = {}
-    $scope.signups.player = {}
+    $scope.utils.infoPopup = function(message) {
+        setModalContent({
+            title: "Info",
+            body: message,
+            primaryCaption: "Ok",
+            action: closeModal
+        });
+        showModal();
+    }
+
+    $scope.utils.playerInfo = function(playerInfo) {
+        return "About player " + playerInfo.name + ": " + (playerInfo.description ? playerInfo.description : "<not available>");
+    }
 
     $scope.signups.signupTeam = function() {
         console.log($scope.signups.team);
@@ -48,12 +64,13 @@ vbFrontend.controller('mainController', function($scope, $http) {
 
     $scope.signups.signupPlayer = function() {
         if (!$scope.signups.player.accepted) {
-            showModal({
+            setModalContent({
                 title: "Warning",
                 body: "Confirm, that you've read the rules of Nokia Cup 2015 and fully agree with them",
                 primaryCaption: "I confirm",
                 action: addPlayer
             });
+            showModal();
         } else addPlayer();
     }
 
@@ -61,16 +78,19 @@ vbFrontend.controller('mainController', function($scope, $http) {
         $http.post('/players', $scope.signups.player).success(function(data) {
             console.log('player added.', data)
         });
-        getModal().modal('hide');
+        closeModal();
     }
 
     var setModalContent = function(modal) {
         $scope.modal = modal;
     }
 
-    var showModal = function(content) {
-        setModalContent(content);
-        $('#myModal').modal();
+    var showModal = function() {
+        getModal().modal();
+    }
+
+    var closeModal = function() {
+        getModal().modal('hide');
     }
 
     var getModal = function() {

@@ -104,14 +104,10 @@
         <h1 class="page-header" id="header-news">News</h1>
         <p class="lead">Please follow the tournament updates</p>
         <div class="list-group">
-            <a href="#" class="list-group-item active">
-                <h4 class="list-group-item-heading">No more team slots are left!</h4>
-                <p class="list-group-item-text">The signups are currently closed</p>
-            </a>
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">Terms of tournament update</h4>
-                <p class="list-group-item-text">Please get familliar with the update in the terms of tournament</p>
-            </a>
+            <div class="list-group-item" ng-repeat="news in data.news">
+                <h4 class="list-group-item-heading">{{news.title}}<button ng-click="utils.infoPopup(news.content)" class="btn btn-link"><span class="glyphicon glyphicon-info-sign"></span></h4>
+                <p class="list-group-item-text"><small>written by </small> {{news.author}} on {{news.date| date:"MM-dd-yyyy',' h:mm a" }}</p>
+            </div>
         </div>
         <h1 class="page-header" id="header-rules">Rules</h1>
         <p class="lead">Before signing up for the tournament please read this section carefully</p>
@@ -253,11 +249,9 @@
                 <td><span class="glyphicon glyphicon-link" title="{{team._id}}"></span>
                 </td>
                 <td>
-                {{team.name}} 
-                    <button class="btn-success btn-xs btn pull-right" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]">more... <span class="glyphicon glyphicon-info-sign"/>
-                    </button>
+                <button class="btn btn-link" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]" title="click to show more information">{{team.name}}</button>
                 </td>
-                <td>{{team.date | date:"MM/dd/yyyy 'at' h:mma" }}</td>
+                <td>{{team.date | date:"MM-dd-yyyy',' h:mm a" }}</td>
                 <td><span ng-show="team.approved" class="glyphicon glyphicon-ok" />
 
             </tr>
@@ -288,17 +282,20 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Mail address</th>
                     <th>Join date</th>
                     <th>Free</th>
                 </tr>
             </thead>
-            <tr>
-                <td>1</td>
-                <td>John Doe</td>
+            <tr ng-repeat="player in data.players">
+                <td><span class="glyphicon glyphicon-link" title="{{player._id}}"></span></td>
+                <td><button class="btn btn-link" ng-click="utils.infoPopup(utils.playerInfo(player))">{{player.name}}</button></td>
+                <td><a href="mailto:{{player.mail}}?subject=Wanna play with me on Nokia Volleyball Cup 2015?">{{player.mail}}</a></td>
+                <td>{{player.date | date:"MM-dd-yyyy',' h:mm a" }}</td>
                 <td>
-                    2015-01-02
+                    <span ng-show="player.available" class="glyphicon glyphicon-ok" />
+                     <span ng-show="!player.available" class="glyphicon glyphicon-remove" />
                 </td>
-                <td><span class="glyphicon glyphicon-stop"></span>
             </tr>
         </table>
 

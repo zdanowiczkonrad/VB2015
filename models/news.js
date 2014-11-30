@@ -1,12 +1,12 @@
 var mongoose = require(process.env.ENV=="dev" ? (process.cwd()+'/mocks/mongoose.js') : 'mongoose');
 var Schema = mongoose.Schema;
 
-var usersSchema = new Schema({
-  name: String,
-  description: String,
-  mail: String,
+var newsSchema = new Schema({
+  title: String,
+  content: String,
+  author: String,
   date: {type: Date, default: Date.now },
-  available: {type: Boolean, default: true}
+  visible: {type: Boolean, default: true}
 });
 
-mongoose.model('users', usersSchema);
+mongoose.model('news', newsSchema);
