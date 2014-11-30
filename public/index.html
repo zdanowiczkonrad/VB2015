@@ -27,7 +27,7 @@
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 
-<body ng-controller="mainController">
+<body ng-controller="mainController" data-spy="scroll" data-target="#topNavigation">
     <div class="container">
     <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -89,7 +89,7 @@
 
             <h1>Nokia Volleyball Cup <small>2015</small></h1>
             <!-- <p class="lead">Sign up to the first Nokia Volleyball Cup!</p> -->
-            <button type="button" class="btn btn-primary btn-lg">Sign up <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </button>
+            <a href="#header-signup"><button type="button" class="btn btn-primary btn-lg">Sign up <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </button></a>
             <button type="button" class="btn btn-default btn-lg">Read more</button>
         </div>
 
@@ -133,35 +133,36 @@
             <p>Take a moment and fill in the fields below. Mandatory fields are marked with an asterisk. Make sure that you are familliar with the rules of the tournament!</p>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team name</label>
+                    <label class="col-sm-4 control-label">Team name <span class="glyphicon glyphicon-asterisk"/></label>
                     <div class="col-sm-5">
                         <input ng-model="signups.team.name" class="form-control" placeholder="Team name (must be unique)">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team captain</label>
+                    <label class="col-sm-4 control-label">Team captain <span class="glyphicon glyphicon-asterisk"/></label>
                     <div class="col-sm-5">
                         <input ng-model="signups.team.captain" class="form-control" placeholder="Team captain's name">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team captain's mail</label>
+                    <label class="col-sm-4 control-label">Team captain's mail <span class="glyphicon glyphicon-asterisk"/></label>
                     <div class="col-sm-5">
                         <input ng-model="signups.team.mail" class="form-control" placeholder="Team captain's mail @ nsn.com">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team description</label>
+                    <label class="col-sm-4 control-label">Team description <span class="glyphicon glyphicon-asterisk"/></label>
                     <div class="col-sm-8">
                         <textarea ng-model="signups.team.description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team members <small>(up to 8 players)</small>
+                    <label class="col-sm-4 control-label">Team members <small>(up to 8 players)</small> 
                         <br/>
 
                         <small>list of players in format <code>name&nbsp;,&nbsp;mail&nbsp;,&nbsp;nsn&#8209;intra&nbsp;&#9166;</code>
-                </small>
+                </small><br/>
+                <span class="glyphicon glyphicon-asterisk"/>
 
                     </label>
                     <div class="col-sm-8">
@@ -173,7 +174,7 @@
                     <div class="col-sm-offset-0 col-sm-10">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event
+                                <input type="checkbox" ng-model="signups.team.accepted"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event <span class="glyphicon glyphicon-asterisk"/>
                             </label>
                         </div>
                     </div>
@@ -192,14 +193,14 @@
             <p>Fill in all the required fields so that other players are able to see it and contact you in case they're interested in taking you as a team member.</p>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Name</label>
+                    <label class="col-sm-4 control-label">Name <span class="glyphicon glyphicon-asterisk"/></label>
                     <div class="col-sm-5">
                         <input class="form-control" placeholder="Name" ng-model="signups.player.name">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Contact mail</label>
+                    <label class="col-sm-4 control-label">Contact mail <span class="glyphicon glyphicon-asterisk"/></label>
                     <div class="col-sm-5">
                         <input class="form-control" placeholder="Your mail @ nsn.com" ng-model="signups.player.mail">
                     </div>
@@ -264,8 +265,7 @@
 
                         <dt>Description</dt>
                         <dd>{{team.description}}</dd>
-                        <dt>Players</dt>
-                        <dd>{{team.members}}</dd>
+              
                     </dl>
 
 
