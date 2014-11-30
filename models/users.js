@@ -3,8 +3,9 @@ var Schema = mongoose.Schema;
 
 var usersSchema = new Schema({
   name: String,
-  intra: String,
-  mail: String
+  description: String,
+  mail: String,
+  date: {type: Date, default: Date.now }
 });
 
 mongoose.model('users', usersSchema);

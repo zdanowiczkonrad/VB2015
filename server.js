@@ -28,17 +28,17 @@ fs.readdirSync(__dirname + '/models').forEach(function(fileName) {
     if (~fileName.indexOf('.js')) require(__dirname + '/models/' + fileName);
 });
 
-app.get('/users', function(req, res) {
+app.get('/players', function(req, res) {
     mongoose.model('users').find(
         function(err, users) {
             res.send(users);
         });
 });
 
-app.post('/users', function(req, res) {
+app.post('/players', function(req, res) {
     var newUser = mongoose.model('users')({
         name: req.body.name,
-        intra: req.body.intra,
+        description: req.body.description,
         mail: req.body.mail
     });
     newUser.save(function(err) {
@@ -58,7 +58,7 @@ app.post('/users', function(req, res) {
     });
 });
 
-app.get('/users/:userId', function(req, res) {
+app.get('/players/:userId', function(req, res) {
     mongoose.model('users').find({
         _id: req.params.userId
     }, function(err, users) {

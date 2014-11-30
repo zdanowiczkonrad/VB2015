@@ -29,6 +29,24 @@
 
 <body ng-controller="mainController">
     <div class="container">
+    <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{modal.title}}</h4>
+      </div>
+      <div class="modal-body">
+        {{modal.body}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" ng-click="modal.action()" class="btn btn-primary">{{modal.primaryCaption}}</button>
+      </div>
+    </div>
+  </div>
+</div>
         <nav id="topNavigation" class="navbar navbar-default navbar-ocean navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -46,21 +64,21 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Idea</a>
+                        <li><a href="#header-idea">Idea</a>
                         </li>
-                        <li><a href="#">News</a>
+                        <li><a href="#header-news">News</a>
                         </li>
-                        <li><a href="#">Rules</a>
+                        <li><a href="#header-rules">Rules</a>
                         </li>
-                        <li><a href="#"><strong>Sign up</strong></a>
+                        <li><a href="#header-signup"><strong>Sign up</strong></a>
                         </li>
-                        <li><a href="#">Teams</a>
+                        <li><a href="#header-teams">Teams</a>
                         </li>
-                        <li><a href="#">Free Players</a>
+                        <li><a href="#header-players">Free Players</a>
                         </li>
-                        <li><a href="#">Contact</a>
+                        <li><a href="#header-contact">Contact</a>
                         </li>
-                        <li><a href="#">FAQ</a>
+                        <li><a href="#header-faq">FAQ</a>
                         </li>
                     </ul>
                 </div>
@@ -75,7 +93,7 @@
             <button type="button" class="btn btn-default btn-lg">Read more</button>
         </div>
 
-        <h1 class="page-header">Idea</h1>
+        <h1 class="page-header" id="header-idea">Idea</h1>
         <p class="lead">We are pleased to invite you to the first edition of the Nokia Volleyball Cup!</p>
         <ul class="list-group">
             <li class="list-group-item"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><strong> Date</strong> → 10 January 2015</li>
@@ -83,7 +101,7 @@
             <li class="list-group-item"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <strong>Start time</strong> → 9:00 AM</li>
         </ul>
         <p class="well">Sign up your team and have fun during the tournament :) The only requirement is that you are a Nokia employee, but feel free to take your friends and family to support you in the stands!</p>
-        <h1 class="page-header">News</h1>
+        <h1 class="page-header" id="header-news">News</h1>
         <p class="lead">Please follow the tournament updates</p>
         <div class="list-group">
             <a href="#" class="list-group-item active">
@@ -95,7 +113,7 @@
                 <p class="list-group-item-text">Please get familliar with the update in the terms of tournament</p>
             </a>
         </div>
-        <h1 class="page-header">Rules</h1>
+        <h1 class="page-header" id="header-rules">Rules</h1>
         <p class="lead">Before signing up for the tournament please read this section carefully</p>
         <ul>
             <li>Nokia is not responsible for any injury or loss of personal property whether such injuries or losses occur</li>
@@ -104,7 +122,7 @@
             <li>Always comply with the fair play rules </li>
         </ul>
 
-        <h1 class="page-header">Sign up</h1>
+        <h1 class="page-header" id="header-signup">Sign up</h1>
         <p class="lead">Fill in this form if you are willing to participate, either with your team or as a <em>free player</em>.</p>
         <div class="btn-group">
 
@@ -154,6 +172,17 @@
                         <textarea ng-model="signups.team.members" class="form-control" rows="8"></textarea>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-0 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-sm-offset-0 col-sm-10">
                         <button type="submit" ng-click="signups.signupTeam()" class="btn btn-lg btn-primary">Sign up</button>
@@ -169,20 +198,20 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Name</label>
                     <div class="col-sm-5">
-                        <input class="form-control" placeholder="Name">
+                        <input class="form-control" placeholder="Name" ng-model="signups.player.name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Contact mail</label>
                     <div class="col-sm-5">
-                        <input class="form-control" placeholder="Your mail @ nsn.com">
+                        <input class="form-control" placeholder="Your mail @ nsn.com" ng-model="signups.player.mail">
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Few words about yourself :-)</label>
                     <div class="col-sm-8">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea ng-model="signups.player.description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
 
@@ -190,14 +219,14 @@
                     <div class="col-sm-offset-0 col-sm-10">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event
+                                <input type="checkbox" ng-model="signups.player.accepted"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-0 col-sm-10">
-                        <button type="submit" class="btn btn-lg btn-primary">Sign up</button>
+                        <button type="submit" class="btn btn-lg btn-primary" ng-click="signups.signupPlayer()">Sign up</button>
                     </div>
                 </div>
             </form>
@@ -207,7 +236,7 @@
 
 
 
-        <h1 class="page-header">Teams</h1>
+        <h1 class="page-header" id="header-teams">Teams</h1>
 
         <p class="lead">Here you can find teams that have already agreed to participate in the
             <abbr>NVC2k15</abbr> <em>(Nokia Volleyball Cup 2015)</em>.</p>
@@ -224,10 +253,11 @@
                 <td><span class="glyphicon glyphicon-link" title="{{team._id}}"></span>
                 </td>
                 <td>
-                    <button class="btn-success btn-xs btn" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]">{{team.name}} <span class="glyphicon glyphicon-plus" />
+                {{team.name}} 
+                    <button class="btn-success btn-xs btn pull-right" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]">more... <span class="glyphicon glyphicon-info-sign"/>
                     </button>
                 </td>
-                <td>{{team.date}}</td>
+                <td>{{team.date | date:"MM/dd/yyyy 'at' h:mma" }}</td>
                 <td><span ng-show="team.approved" class="glyphicon glyphicon-ok" />
 
             </tr>
@@ -251,7 +281,7 @@
         </table>
 
 
-        <h1 class="page-header">Free players</h1>
+        <h1 class="page-header" id="header-players">Free players</h1>
         <p class="lead">Here you can find players that have already agreed to participate in the NVC2k15 (Nokia Volleyball Cup 2015) and are looking for a squad. Feel free to contact and invite them to your team.</p>
         <table class="table table-responsive">
             <thead>
@@ -272,7 +302,11 @@
             </tr>
         </table>
 
-        <h1>FAQ</h1>
+        <h1 class="page-header" id="header-contact">Contact</h1>
+
+        <p>Contact</p>
+
+        <h1 class="page-header" id="header-faq">FAQ</h1>
 
         <p>Everything is clear and has been said. :)</p>
     </div>
