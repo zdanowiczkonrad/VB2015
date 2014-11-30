@@ -1,6 +1,7 @@
    .jumbotron {
        margin-top: 100px;
        text-align: center;
+       padding: 60px 10px;
    }
    .navbar-brand {
        padding: 0px 10px;
@@ -27,4 +28,12 @@
    .btn-primary {
        background-color: #004C9A;
        font-weight: 200;
+   }
+   /* awesome styles of mine :) */
+   
+   h1, h2, h3 {
+       text-shadow: #eee 1px 0px 0px;
+   }
+   .navbar-default .navbar-toggle .icon-bar {
+       background-color: #aaa;
    }
