@@ -106,6 +106,7 @@ var filterResponseForCredentials = function(res) {
         res.send({
             error: "You are not authorized to do such operation!"
         });
+        return;
     }
 }
 
@@ -121,6 +122,7 @@ var updateTeamStatusTo = function(status, req, res) {
             res.send({
                 approved: status
             });
+            return;
         } else {
             console.log('updating failed');
             res.status(500);
