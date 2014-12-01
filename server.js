@@ -115,7 +115,7 @@ var updateTeamStatusTo = function(status,req,res) {
         _id: req.id
     }, {
         $set: {
-            'approved': newStatus
+            'approved': status
         }
     }, {
         upsert: true
@@ -123,10 +123,10 @@ var updateTeamStatusTo = function(status,req,res) {
         if (!err) {
             console.log('update correct');
             res.send({
-                approved: newStatus
+                approved: status
             });
         } else {
-            console.log('updating failed')
+            console.log('updating failed');
             res.status(500);
             res.send({
                 error: 'Updating failed'
