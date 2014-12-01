@@ -22,7 +22,7 @@ app.use(bodyParser.json({
 })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-app.listen(8000);
+app.listen(80);
 console.log("app up.");
 fs.readdirSync(__dirname + '/models').forEach(function(fileName) {
     if (~fileName.indexOf('.js')) require(__dirname + '/models/' + fileName);
