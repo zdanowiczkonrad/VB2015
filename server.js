@@ -8,7 +8,7 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var fs = require('fs');
 var mongoose = require(process.env.ENV == "dev" ? (process.cwd() + '/mocks/mongoose.js') : 'mongoose');
-
+var ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/vb');
 
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
@@ -112,7 +112,7 @@ var filterResponseForCredentials = function(res) {
 var updateTeamStatusTo = function(status, req, res) {
     filterResponseForCredentials(res);
     mongoose.model('teams').update({
-        '_id': ObjectId.fromString(req.id)
+        '_id': req.id
     }, {
         'approved': status
     }, function(err) {
