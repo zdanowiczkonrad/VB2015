@@ -135,22 +135,22 @@ var updateTeam = function(query, req, res) {
 }
 
 app.post('/teams/:teamId/approve', function(req, res) {
-    updateTeamStatusTo({approved: true}, req, res);
+    updateTeam({approved: true}, req, res);
     console.log("exitting approve team method");
 });
 
 app.post('/teams/:teamId/unapprove', function(req, res) {
-    updateTeamStatusTo({approved: false}, req, res);
+    updateTeam({approved: false}, req, res);
     console.log("exitting unapprove team method");
 });
 
 app.post('/teams/:teamId/addToReserve', function(req, res) {
-    updateTeamStatusTo({reserve: true}, req, res);
+    updateTeam({reserve: true}, req, res);
     console.log("exitting approve team method");
 });
 
 app.post('/teams/:teamId/removeFromReserve', function(req, res) {
-    updateTeamStatusTo({reserve: false}, req, res);
+    updateTeam({reserve: false}, req, res);
     console.log("exitting unapprove team method");
 });
 
