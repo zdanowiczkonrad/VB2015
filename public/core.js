@@ -4,7 +4,7 @@ vbFrontend.controller('mainController', function($scope, $http, $interval) {
 
     $scope.settings = {
         'admin': false,
-        'pullInterval': 10 * 1000
+        'pullInterval': 120 * 1000
     }
 
     $scope.signups = {}

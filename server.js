@@ -7,6 +7,7 @@ var morgan = require('morgan'); // log requests to the console (express4)
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var fs = require('fs');
+var session = require('express-session');
 var mongoose = require(process.env.ENV == "dev" ? (process.cwd() + '/mocks/mongoose.js') : 'mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/vb');
@@ -27,13 +28,16 @@ app.use(bodyParser.json({
 })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-app.listen(8000);
+app.listen(process.env.VB_APP_PORT || 8000);
+
 console.log("app up.");
 fs.readdirSync(__dirname + '/models').forEach(function(fileName) {
     if (~fileName.indexOf('.js')) require(__dirname + '/models/' + fileName);
 });
 
-var authorized = false;
+app.use(session({
+    'secret': 'Konrad Zdanowicz jest spoko'
+}));
 
 app.get('/players', function(req, res) {
     mongoose.model('users').find(
@@ -105,18 +109,20 @@ app.post('/teams', function(req, res) {
         }
     });
 });
-var filterResponseForCredentials = function(res) {
-    if (!authorized) {
+var filterResponseForCredentials = function(req, res) {
+    if (req.session.authorized) {
+        return true;
+    } else {
         res.status(403);
         res.send({
             error: "You are not authorized to do such operation!"
         });
-        return false;
-    } else return true;
+    }
+    return false;
 }
 
 var updateTeam = function(query, req, res) {
-    if (!filterResponseForCredentials(res)) return false;
+    if (!filterResponseForCredentials(req, res)) return false;
     console.log("authorized to update team");
     mongoose.model('teams').update({
         "_id": req.params.teamId
@@ -175,12 +181,7 @@ app.get('/news', function(req, res) {
 });
 
 app.post('/news', function(req, res) {
-    if (!authorized) {
-        res.status(403);
-        res.send({
-            error: "You are not authorized to do such operation"
-        });
-    }
+    if (!filterResponseForCredentials(req, res)) return false;
     var newNews = mongoose.model('news')({
         title: req.body.title,
         content: req.body.content,
@@ -206,16 +207,16 @@ app.post('/news', function(req, res) {
 
 app.post('/admin', function(req, res) {
     if (req.body.login == ADMIN_LOGIN && new Buffer(req.body.password).toString('base64') == ADMIN_PASSWORD)
-        authorized = true;
+        req.session.authorized = true;
 
-    res.send(authorized ? {
+    res.send(req.session.authorized==true ? {
         message: "OK"
     } : {
         message: "denied"
     });
 });
 app.get('/admin/logged', function(req, res) {
-    if (!authorized) {
+    if (!req.session.authorized) {
         res.status(403);
         res.send({
             error: "You are not authorized to do such operation"
@@ -229,6 +230,6 @@ app.get('/admin/logged', function(req, res) {
 })
 app.get('/admin/logout', function(req, res) {
     console.log("logging out");
-    authorized = false;
+    req.session.authorized = false;
     res.redirect("/admin");
 });
