@@ -113,7 +113,7 @@ var filterResponseForCredentials = function(res) {
 var updateTeamStatusTo = function(status, req, res) {
     if (!filterResponseForCredentials(res)) return false;
     console.log("authorized to update team status");
-    mongoose.model('teams').find({"_id":ObjectId(req.id)}, function(error, team) {
+    mongoose.model('teams').find({"_id":req.params.teamId}, function(error, team) {
         console.log('found team',team);
         if (error) {
             res.send({
