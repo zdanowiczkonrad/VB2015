@@ -28,6 +28,8 @@ fs.readdirSync(__dirname + '/models').forEach(function(fileName) {
     if (~fileName.indexOf('.js')) require(__dirname + '/models/' + fileName);
 });
 
+var authorized = false;
+
 app.get('/players', function(req, res) {
     mongoose.model('users').find(
         function(err, users) {
@@ -98,6 +100,48 @@ app.post('/teams', function(req, res) {
         }
     });
 });
+var filterResponseForCredentials = function(res) {
+    if (!authorized) {
+        res.status(403);
+        res.send({
+            error: "You are not authorized to do such operation!"
+        });
+    }
+}
+
+var updateTeamStatusTo = function(status,req,res) {
+    filterResponseForCredentials(res);
+    mongoose.model('teams').update({
+        _id: req.id
+    }, {
+        $set: {
+            'approved': newStatus
+        }
+    }, {
+        upsert: true
+    }, function(err) {
+        if (!err) {
+            console.log('update correct');
+            res.send({
+                approved: newStatus
+            });
+        } else {
+            console.log('updating failed')
+            res.status(500);
+            res.send({
+                error: 'Updating failed'
+            });
+        }
+    });
+}
+
+app.post('/teams/:teamId/approve', function(req, res) {
+    updateTeamStatusTo(true,req,res);
+});
+
+app.post('/teams/:teamId/unapprove', function(req, res) {
+    updateTeamStatusTo(false,req,res);
+});
 
 app.get('/news', function(req, res) {
     mongoose.model('news').find(
@@ -107,9 +151,11 @@ app.get('/news', function(req, res) {
 });
 
 app.post('/news', function(req, res) {
-    if(!authorized) {
+    if (!authorized) {
         res.status(403);
-        res.send({error: "You are not authorized to do such operation"});
+        res.send({
+            error: "You are not authorized to do such operation"
+        });
     }
     var newNews = mongoose.model('news')({
         title: req.body.title,
@@ -134,7 +180,7 @@ app.post('/news', function(req, res) {
     });
 });
 
-var authorized = false;
+
 
 app.post('/admin', function(req, res) {
     console.log(req.body);
@@ -147,11 +193,21 @@ app.post('/admin', function(req, res) {
         message: "denied"
     });
 });
-
-app.get('/admin/logout',function(req,res) {
+app.get('/admin/logged', function(req, res) {
+    if (!authorized) {
+        res.status(403);
+        res.send({
+            error: "You are not authorized to do such operation"
+        });
+    } else {
+        res.status(200);
+        res.send({
+            message: "OK"
+        });
+    }
+})
+app.get('/admin/logout', function(req, res) {
     console.log("logging out");
-    authorized=false;
+    authorized = false;
     res.redirect("/admin");
 });
-
-
