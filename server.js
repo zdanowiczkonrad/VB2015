@@ -8,7 +8,7 @@ var bodyParser = require('body-parser'); // pull information from HTML POST (exp
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var fs = require('fs');
 var mongoose = require(process.env.ENV == "dev" ? (process.cwd() + '/mocks/mongoose.js') : 'mongoose');
-var ObjectId = mongoose.Types.ObjectId; 
+var ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/vb');
 
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
@@ -113,27 +113,28 @@ var filterResponseForCredentials = function(res) {
 var updateTeamStatusTo = function(status, req, res) {
     if (!filterResponseForCredentials(res)) return false;
     console.log("authorized to update team status");
-    mongoose.model('teams').find({"_id":req.params.teamId}, function(error, team) {
-        console.log('found team',team);
+    mongoose.model('teams').update({
+        "_id": req.params.teamId
+    }, {
+        $set: {
+            approved: status
+        }
+    }, {
+        upsert: true
+    }, function(error, team) {
+        console.log('found team', team);
         if (error) {
             res.send({
-                error: 'No such team of id' + req.id
+                error: 'Failed for ID' + req.params.id
             });
         } else {
-            console.log("changing team status");
-            team.approved = status;
-            team.save(function(error, data) {
-                if (error) {
-                    res.send({
-                        error: 'Update failed'
-                    });
-                } else {
-                    console.log("status changed");
-                    res.send({
-                        'message': 'OK'
-                    });
-                }
+
+            console.log("status changed");
+            res.send({
+                'message': 'OK'
             });
+
+
         }
     });
 }
