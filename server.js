@@ -108,6 +108,7 @@ var filterResponseForCredentials = function(res) {
         });
         return false;
     }
+    else return true;
 }
 
 var updateTeamStatusTo = function(status, req, res) {
