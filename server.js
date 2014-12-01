@@ -109,16 +109,12 @@ var filterResponseForCredentials = function(res) {
     }
 }
 
-var updateTeamStatusTo = function(status,req,res) {
+var updateTeamStatusTo = function(status, req, res) {
     filterResponseForCredentials(res);
     mongoose.model('teams').update({
-        _id: req.id
+        '_id': ObjectId.fromString(req.id)
     }, {
-        $set: {
-            'approved': status
-        }
-    }, {
-        upsert: true
+        'approved': status
     }, function(err) {
         if (!err) {
             console.log('update correct');
@@ -136,11 +132,11 @@ var updateTeamStatusTo = function(status,req,res) {
 }
 
 app.post('/teams/:teamId/approve', function(req, res) {
-    updateTeamStatusTo(true,req,res);
+    updateTeamStatusTo(true, req, res);
 });
 
 app.post('/teams/:teamId/unapprove', function(req, res) {
-    updateTeamStatusTo(false,req,res);
+    updateTeamStatusTo(false, req, res);
 });
 
 app.get('/news', function(req, res) {
