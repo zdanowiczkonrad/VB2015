@@ -107,22 +107,19 @@ var filterResponseForCredentials = function(res) {
             error: "You are not authorized to do such operation!"
         });
         return false;
-    }
-    else return true;
+    } else return true;
 }
 
 var updateTeamStatusTo = function(status, req, res) {
     if (!filterResponseForCredentials(res)) return false;
     console.log("authorized to update team status");
-    mongoose.model('teams').findOne({
-        _id: req.id
-    }, function(error, team) {
+    mongoose.model('teams').findById(req.id, function(error, team) {
         if (error) {
             res.send({
                 error: 'No such team of id' + req.id
             });
         } else {
-             console.log("changing team stsatus");
+            console.log("changing team stsatus");
             team.approved = status;
             team.save(function(error, data) {
                 if (error) {
@@ -130,7 +127,7 @@ var updateTeamStatusTo = function(status, req, res) {
                         error: 'Update failed'
                     });
                 } else {
-                     console.log("status changed");
+                    console.log("status changed");
                     res.send({
                         'message': 'OK'
                     });
@@ -142,12 +139,12 @@ var updateTeamStatusTo = function(status, req, res) {
 
 app.post('/teams/:teamId/approve', function(req, res) {
     updateTeamStatusTo(true, req, res);
-     console.log("exitting approve team method");
+    console.log("exitting approve team method");
 });
 
 app.post('/teams/:teamId/unapprove', function(req, res) {
     updateTeamStatusTo(false, req, res);
-     console.log("exitting unapprove team method");
+    console.log("exitting unapprove team method");
 });
 
 app.get('/news', function(req, res) {
