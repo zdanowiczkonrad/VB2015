@@ -11,6 +11,11 @@ var mongoose = require(process.env.ENV == "dev" ? (process.cwd() + '/mocks/mongo
 var ObjectId = mongoose.Types.ObjectId;
 mongoose.connect('mongodb://localhost:27017/vb');
 
+var credentials = require('./settings/credentials.json');
+console.log(credentials);
+
+var ADMIN_LOGIN = credentials.login;
+var ADMIN_PASSWORD = credentials.password;
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.urlencoded({
@@ -22,7 +27,7 @@ app.use(bodyParser.json({
 })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-app.listen(80);
+app.listen(8000);
 console.log("app up.");
 fs.readdirSync(__dirname + '/models').forEach(function(fileName) {
     if (~fileName.indexOf('.js')) require(__dirname + '/models/' + fileName);
@@ -135,22 +140,30 @@ var updateTeam = function(query, req, res) {
 }
 
 app.post('/teams/:teamId/approve', function(req, res) {
-    updateTeam({approved: true}, req, res);
+    updateTeam({
+        approved: true
+    }, req, res);
     console.log("exitting approve team method");
 });
 
 app.post('/teams/:teamId/unapprove', function(req, res) {
-    updateTeam({approved: false}, req, res);
+    updateTeam({
+        approved: false
+    }, req, res);
     console.log("exitting unapprove team method");
 });
 
 app.post('/teams/:teamId/addToReserve', function(req, res) {
-    updateTeam({reserve: true}, req, res);
+    updateTeam({
+        reserve: true
+    }, req, res);
     console.log("exitting approve team method");
 });
 
 app.post('/teams/:teamId/removeFromReserve', function(req, res) {
-    updateTeam({reserve: false}, req, res);
+    updateTeam({
+        reserve: false
+    }, req, res);
     console.log("exitting unapprove team method");
 });
 
@@ -192,8 +205,7 @@ app.post('/news', function(req, res) {
 });
 
 app.post('/admin', function(req, res) {
-    console.log(req.body);
-    if (req.body.login == "admin" && req.body.password == "admin")
+    if (req.body.login == ADMIN_LOGIN && new Buffer(req.body.password).toString('base64') == ADMIN_PASSWORD)
         authorized = true;
 
     res.send(authorized ? {

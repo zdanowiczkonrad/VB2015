@@ -186,4 +186,13 @@ vbFrontend.controller('mainController', function($scope, $http, $interval) {
             $scope.utils.infoPopup("You are not allowed to unapprove team");
         });
     }
+    $scope.admin.addNews = {};
+
+    $scope.admin.addNews.submit = function(news) {
+        $http.post('/news', news).success(function(data) {
+            $scope.utils.infoPopup("News added");
+        }).error(function() {
+            $scope.utils.infoPopup("You are not allowed to add news.");
+        });
+    }
 });

@@ -120,6 +120,45 @@
                 <p class="list-group-item-text"><small>written by </small> {{news.author}} on {{news.date| date:"MM-dd-yyyy',' h:mm a" }}</p>
             </div>
         </div>
+
+        <div class="panel panel-default" ng-show="settings.admin">
+            <div class="panel-heading">Add news</div>
+            <div class="panel-body">
+                <form role="form">
+
+                    <div class="form-group">
+                        <label for="newsTitle" class="col-sm-2 control-label">title</label>
+                        <div class="col-sm-10">
+
+                            <input class="form-control" type="text" ng-model="admin.addNews.title" placeholder="title" id="newsTitle" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newsContent" class="col-sm-2 control-label">content</label>
+                        <div class="col-sm-10">
+
+                            <textarea class="form-control" ng-model="admin.addNews.content" id="newsContent"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newsAuthor" class="col-sm-2 control-label">author</label>
+                        <div class="col-sm-10">
+
+                            <input class="form-control" type="text" ng-model="admin.addNews.author" placeholder="author" id="newsAuthor" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button ng-click="admin.addNews.submit(admin.addNews)" class="btn btn-default">Add news</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
         <h1 class="page-header" id="header-rules">Rules</h1>
         <p class="lead">Before signing up for the tournament please read this section carefully</p>
         <ul>
@@ -272,12 +311,12 @@
                 </td>
                 <td>{{team.date | date:"MM-dd-yyyy',' h:mm a" }}</td>
                 <td>
-                 <span ng-show="team.approved" class="glyphicon glyphicon-ok"></span>
+                    <span ng-show="team.approved" class="glyphicon glyphicon-ok"></span>
                     <div class="pull-right" ng-show="settings.admin">
                         <button ng-click="admin.approve(team._id)" class="btn btn-sm btn-success">approve</button>
-                           <button class="btn btn-sm btn-danger" ng-click="admin.unapprove(team._id)">unapprove</button>
+                        <button class="btn btn-sm btn-danger" ng-click="admin.unapprove(team._id)">unapprove</button>
                     </div>
-                   
+
 
                 </td>
             </tr>
