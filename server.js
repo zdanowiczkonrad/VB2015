@@ -111,23 +111,26 @@ var filterResponseForCredentials = function(res) {
 }
 
 var updateTeamStatusTo = function(status, req, res) {
-    if(!filterResponseForCredentials(res)) return;
-    mongoose.model('teams').update({
-        '_id': req.id
-    }, {
-        'approved': status
-    }, function(err) {
-        if (!err) {
-            console.log('update correct');
+    if (!filterResponseForCredentials(res)) return;
+    mongoose.model('teams').findOne({
+        _id: req.id
+    }, function(error, team) {
+        if (error) {
             res.send({
-                approved: status
+                error: 'No such team of id' + req.id
             });
-            return;
         } else {
-            console.log('updating failed');
-            res.status(500);
-            res.send({
-                error: 'Updating failed'
+            team.approved = status;
+            team.save(function(error, data) {
+                if (error) {
+                    res.send({
+                        error: 'Update failed'
+                    });
+                } else {
+                    res.send({
+                        'message': 'OK'
+                    });
+                }
             });
         }
     });
