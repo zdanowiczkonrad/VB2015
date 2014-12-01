@@ -107,6 +107,10 @@ app.get('/news', function(req, res) {
 });
 
 app.post('/news', function(req, res) {
+    if(!authorized) {
+        res.status(403);
+        res.send({error: "You are not authorized to do such operation"});
+    }
     var newNews = mongoose.model('news')({
         title: req.body.title,
         content: req.body.content,
@@ -143,3 +147,11 @@ app.post('/admin', function(req, res) {
         message: "denied"
     });
 });
+
+app.get('/admin/logout',function(req,res) {
+    console.log("logging out");
+    authorized=false;
+    res.redirect("/admin");
+});
+
+
