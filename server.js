@@ -106,12 +106,12 @@ var filterResponseForCredentials = function(res) {
         res.send({
             error: "You are not authorized to do such operation!"
         });
-        return;
+        return false;
     }
 }
 
 var updateTeamStatusTo = function(status, req, res) {
-    filterResponseForCredentials(res);
+    if(!filterResponseForCredentials(res)) return;
     mongoose.model('teams').update({
         '_id': req.id
     }, {
