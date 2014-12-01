@@ -1,6 +1,11 @@
 var vbFrontend = angular.module('vbFrontend', [])
 
-vbFrontend.controller('mainController', function($scope, $http) {
+vbFrontend.controller('mainController', function($scope, $http, $interval) {
+
+    $scope.settings = {
+        'admin': false,
+        'pullInterval': 10 * 1000
+    }
 
     $scope.signups = {}
     $scope.signups.team = {}
@@ -8,29 +13,45 @@ vbFrontend.controller('mainController', function($scope, $http) {
 
     $scope.data = {}
     $scope.utils = {}
+
+    var loadAllData = function() {
+            console.log("loading all data...");
+
+            $http.get('/teams').success(function(data) {
+                $scope.data.teams = data;
+                console.log('Loading teams succeeded', data);
+            });
+
+            $http.get('/players').success(function(data) {
+                $scope.data.players = data;
+                console.log('Loading players succeeded', data);
+            });
+
+            $http.get('/news').success(function(data) {
+                $scope.data.news = data;
+                console.log('Loading news succeeded', data);
+            });
+
+            $http.get('/admin/logged').success(function(data, status) {
+                if (!$scope.settings.admin) {
+                    console.log("authorized.");
+                }
+                $scope.settings.admin = true;
+
+            }).error(function(data, status) {
+                $scope.settings.admin = false;
+            });
+        }
         /**
          * Constructor
          */
         // load team data
-    $http.get('/teams').success(function(data) {
-        $scope.data.teams = data;
-        console.log('Loading teams succeeded', data);
-    });
-
-    $http.get('/players').success(function(data) {
-        $scope.data.players = data;
-        console.log('Loading players succeeded', data);
-    });
-
-    $http.get('/news').success(function(data) {
-        $scope.data.news = data;
-        console.log('Loading news succeeded', data);
-    });
-
+    loadAllData();
+    $interval(loadAllData, $scope.settings.pullInterval);
 
     $scope.utils.getTeamStatusClass = function(team) {
         return {
-            'warning': team.reserve
+            'success': team.approved
         };
     }
 
@@ -147,5 +168,22 @@ vbFrontend.controller('mainController', function($scope, $http) {
 
     var getModal = function() {
         return $('#myModal');
+    }
+
+    $scope.admin = {}
+    $scope.admin.approve = function(teamId) {
+        $http.post('/teams/' + teamId + '/approve').success(function(data) {
+            $scope.utils.infoPopup("Team approved");
+        }).error(function() {
+            $scope.utils.infoPopup("You are not allowed to approve team");
+        });
+    }
+
+    $scope.admin.unapprove = function(teamId) {
+        $http.post('/teams/' + teamId + '/unapprove').success(function(data) {
+            $scope.utils.infoPopup("Team unapproved");
+        }).error(function() {
+            $scope.utils.infoPopup("You are not allowed to unapprove team");
+        });
     }
 });

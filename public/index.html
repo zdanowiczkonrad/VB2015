@@ -29,24 +29,25 @@
 
 <body ng-controller="mainController" data-spy="scroll" data-target="#topNavigation">
     <div class="container">
-    <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{modal.title}}</h4>
-      </div>
-      <div class="modal-body">
-        {{modal.body}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" ng-click="modal.action()" class="btn btn-primary">{{modal.primaryCaption}}</button>
-      </div>
-    </div>
-  </div>
-</div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">{{modal.title}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{modal.body}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" ng-click="modal.action()" class="btn btn-primary">{{modal.primaryCaption}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav id="topNavigation" class="navbar navbar-default navbar-ocean navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -89,16 +90,26 @@
 
             <h1>Nokia Volleyball Cup <small>2015</small></h1>
             <!-- <p class="lead">Sign up to the first Nokia Volleyball Cup!</p> -->
-            <a href="#header-signup"><button type="button" class="btn btn-primary btn-lg">Sign up <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </button></a>
-            <a href="#header-idea"><button type="button" class="btn btn-default btn-lg">Read more</button></a>
+            <a href="#header-signup">
+                <button type="button" class="btn btn-primary btn-lg">Sign up <span class="glyphicon glyphicon-send" aria-hidden="true"></span> </button>
+            </a>
+            <a href="#header-idea">
+                <button type="button" class="btn btn-default btn-lg">Read more</button>
+            </a>
         </div>
 
         <h1 class="page-header" id="header-idea">Idea</h1>
         <p class="lead">We are pleased to invite you to the first edition of the Nokia Volleyball Cup!</p>
         <ul class="list-group">
-            <li class="list-group-item"><h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><strong> Date</strong> → 10 January 2015</h2></li>
-            <li class="list-group-item"><h2><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <strong>Place →</strong> ul. Chełmońskiego 43, Wroclaw</h2></li>
-            <li class="list-group-item"><h2><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <strong>Start time</strong> → 9:00 AM</h2></li>
+            <li class="list-group-item">
+                <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><strong> Date</strong> → 10 January 2015</h2>
+            </li>
+            <li class="list-group-item">
+                <h2><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <strong>Place →</strong> ul. Chełmońskiego 43, Wroclaw</h2>
+            </li>
+            <li class="list-group-item">
+                <h2><span class="glyphicon glyphicon-time" aria-hidden="true"></span> <strong>Start time</strong> → 9:00 AM</h2>
+            </li>
         </ul>
         <p class="well">Sign up your team and have fun during the tournament :) The only requirement is that you are a Nokia employee, but feel free to take your friends and family to support you in the stands!</p>
         <h1 class="page-header" id="header-news">News</h1>
@@ -133,36 +144,41 @@
             <p>Take a moment and fill in the fields below. Mandatory fields are marked with an asterisk. Make sure that you are familliar with the rules of the tournament!</p>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team name <span class="glyphicon glyphicon-asterisk"/></label>
+                    <label class="col-sm-4 control-label">Team name <span class="glyphicon glyphicon-asterisk" />
+                    </label>
                     <div class="col-sm-5">
                         <input ng-model="signups.team.name" class="form-control" placeholder="Team name (must be unique)">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team captain <span class="glyphicon glyphicon-asterisk"/></label>
+                    <label class="col-sm-4 control-label">Team captain <span class="glyphicon glyphicon-asterisk" />
+                    </label>
                     <div class="col-sm-5">
                         <input ng-model="signups.team.captain" class="form-control" placeholder="Team captain's name">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team captain's mail <span class="glyphicon glyphicon-asterisk"/></label>
+                    <label class="col-sm-4 control-label">Team captain's mail <span class="glyphicon glyphicon-asterisk" />
+                    </label>
                     <div class="col-sm-5">
                         <input ng-model="signups.team.mail" class="form-control" placeholder="Team captain's mail @ nsn.com">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team description <span class="glyphicon glyphicon-asterisk"/></label>
+                    <label class="col-sm-4 control-label">Team description <span class="glyphicon glyphicon-asterisk" />
+                    </label>
                     <div class="col-sm-8">
                         <textarea ng-model="signups.team.description" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Team members <small>(up to 8 players)</small> 
+                    <label class="col-sm-4 control-label">Team members <small>(up to 8 players)</small>
                         <br/>
 
-                        <small>list of players in format <code>name&nbsp;,&nbsp;mail&nbsp;,&nbsp;nsn&#8209;intra&nbsp;&#9166;</code>
-                </small><br/>
-                <span class="glyphicon glyphicon-asterisk"/>
+                        <small>list of players in format <code>name&nbsp;,&nbsp;mail&nbsp;&#9166;</code>
+                </small>
+                        <br/>
+                        <span class="glyphicon glyphicon-asterisk" />
 
                     </label>
                     <div class="col-sm-8">
@@ -174,7 +190,7 @@
                     <div class="col-sm-offset-0 col-sm-10">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="signups.team.accepted"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event <span class="glyphicon glyphicon-asterisk"/>
+                                <input type="checkbox" ng-model="signups.team.accepted"> I confirm that I've read the rules of Nokia Volleyball Cup 2015 and fully agree to participate in the event <span class="glyphicon glyphicon-asterisk" />
                             </label>
                         </div>
                     </div>
@@ -193,14 +209,16 @@
             <p>Fill in all the required fields so that other players are able to see it and contact you in case they're interested in taking you as a team member.</p>
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Name <span class="glyphicon glyphicon-asterisk"/></label>
+                    <label class="col-sm-4 control-label">Name <span class="glyphicon glyphicon-asterisk" />
+                    </label>
                     <div class="col-sm-5">
                         <input class="form-control" placeholder="Name" ng-model="signups.player.name">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Contact mail <span class="glyphicon glyphicon-asterisk"/></label>
+                    <label class="col-sm-4 control-label">Contact mail <span class="glyphicon glyphicon-asterisk" />
+                    </label>
                     <div class="col-sm-5">
                         <input class="form-control" placeholder="Your mail @ nsn.com" ng-model="signups.player.mail">
                     </div>
@@ -250,26 +268,29 @@
                 <td><span class="glyphicon glyphicon-link" title="{{team._id}}"></span>
                 </td>
                 <td>
-                <button class="btn btn-link" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]" title="click to show more information">{{team.name}}</button>
+                    <button class="btn btn-link" ng-click="showDetailsOf[team._id]= showDetailsOf[team._id] == 'undefined' ? true : !showDetailsOf[team._id]" title="click to show more information">{{team.name}}</button>
                 </td>
                 <td>{{team.date | date:"MM-dd-yyyy',' h:mm a" }}</td>
-                <td><span ng-show="team.approved" class="glyphicon glyphicon-ok" />
+                <td>
+                 <span ng-show="team.approved" class="glyphicon glyphicon-ok"></span>
+                    <div class="pull-right" ng-show="settings.admin">
+                        <button ng-click="admin.approve(team._id)" class="btn btn-sm btn-success">approve</button>
+                           <button class="btn btn-sm btn-danger" ng-click="admin.unapprove(team._id)">unapprove</button>
+                    </div>
+                   
 
+                </td>
             </tr>
             <tr ng-show="showDetailsOf[team._id]" ng-repeat-end ng-class="utils.getTeamStatusClass(team)">
                 <td colspan="4" style="border-top: 0">
-
                     <dl class="dl-horizontal">
                         <dt>Captain</dt>
-                        <dd>{{team.captain}}</dd>
+                        <dd><a href="mailto:{{team.mail}}?subject=Nokia Volleyball Cup 2015">{{team.captain}}</a>
+                        </dd>
 
                         <dt>Description</dt>
                         <dd>{{team.description}}</dd>
-              
                     </dl>
-
-
-
                 </td>
             </tr>
         </table>
@@ -288,13 +309,17 @@
                 </tr>
             </thead>
             <tr ng-repeat="player in data.players">
-                <td><span class="glyphicon glyphicon-link" title="{{player._id}}"></span></td>
-                <td><button class="btn btn-link" ng-click="utils.infoPopup(utils.playerInfo(player))">{{player.name}}</button></td>
-                <td><a href="mailto:{{player.mail}}?subject=Wanna play with me on Nokia Volleyball Cup 2015?">{{player.mail}}</a></td>
+                <td><span class="glyphicon glyphicon-link" title="{{player._id}}"></span>
+                </td>
+                <td>
+                    <button class="btn btn-link" ng-click="utils.infoPopup(utils.playerInfo(player))">{{player.name}}</button>
+                </td>
+                <td><a href="mailto:{{player.mail}}?subject=Wanna play with me on Nokia Volleyball Cup 2015?">{{player.mail}}</a>
+                </td>
                 <td>{{player.date | date:"MM-dd-yyyy',' h:mm a" }}</td>
                 <td>
                     <span ng-show="player.available" class="glyphicon glyphicon-ok" />
-                     <span ng-show="!player.available" class="glyphicon glyphicon-remove" />
+                    <span ng-show="!player.available" class="glyphicon glyphicon-remove" />
                 </td>
             </tr>
         </table>
@@ -303,9 +328,9 @@
 
         <p>Contact <a href="mailto:marcin.drzewiecki@nsn.com?subject=Nokia VB Cup 2015">Marcin Drzewiecki</a> or <a href="mailto:konrad.zdanowicz@nsn.com?subject=Nokia VB Cup 2015">Konrad Zdanowicz</a> for questions related to organizational and technical aspects.
 
-        <h1 class="page-header" id="header-faq">FAQ</h1>
+            <h1 class="page-header" id="header-faq">FAQ</h1>
 
-        <p>Everything is clear and has been said. :)</p>
+            <p>Everything is clear and has been said. :)</p>
     </div>
 
 </body>

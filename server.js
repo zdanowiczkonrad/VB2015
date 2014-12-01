@@ -191,8 +191,6 @@ app.post('/news', function(req, res) {
     });
 });
 
-
-
 app.post('/admin', function(req, res) {
     console.log(req.body);
     if (req.body.login == "admin" && req.body.password == "admin")
