@@ -110,15 +110,13 @@ var filterResponseForCredentials = function(res) {
     } else return true;
 }
 
-var updateTeamStatusTo = function(status, req, res) {
+var updateTeam = function(query, req, res) {
     if (!filterResponseForCredentials(res)) return false;
-    console.log("authorized to update team status");
+    console.log("authorized to update team");
     mongoose.model('teams').update({
         "_id": req.params.teamId
     }, {
-        $set: {
-            approved: status
-        }
+        $set: query
     }, {
         upsert: true
     }, function(error, team) {
@@ -128,24 +126,31 @@ var updateTeamStatusTo = function(status, req, res) {
                 error: 'Failed for ID' + req.params.id
             });
         } else {
-
-            console.log("status changed");
+            console.log("updated");
             res.send({
                 'message': 'OK'
             });
-
-
         }
     });
 }
 
 app.post('/teams/:teamId/approve', function(req, res) {
-    updateTeamStatusTo(true, req, res);
+    updateTeamStatusTo({approved: true}, req, res);
     console.log("exitting approve team method");
 });
 
 app.post('/teams/:teamId/unapprove', function(req, res) {
-    updateTeamStatusTo(false, req, res);
+    updateTeamStatusTo({approved: false}, req, res);
+    console.log("exitting unapprove team method");
+});
+
+app.post('/teams/:teamId/addToReserve', function(req, res) {
+    updateTeamStatusTo({reserve: true}, req, res);
+    console.log("exitting approve team method");
+});
+
+app.post('/teams/:teamId/removeFromReserve', function(req, res) {
+    updateTeamStatusTo({reserve: false}, req, res);
     console.log("exitting unapprove team method");
 });
 
