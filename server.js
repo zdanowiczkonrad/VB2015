@@ -114,12 +114,13 @@ var updateTeamStatusTo = function(status, req, res) {
     if (!filterResponseForCredentials(res)) return false;
     console.log("authorized to update team status");
     mongoose.model('teams').findById(req.id, function(error, team) {
+        console.log('found team',team);
         if (error) {
             res.send({
                 error: 'No such team of id' + req.id
             });
         } else {
-            console.log("changing team stsatus");
+            console.log("changing team status");
             team.approved = status;
             team.save(function(error, data) {
                 if (error) {
